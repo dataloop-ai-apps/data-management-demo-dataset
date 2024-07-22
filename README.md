@@ -1,6 +1,13 @@
-# Dataset adapter for Example Dataset
+# Animal Dataset Adapter
 
-This dataset adapter is crafted to upload a sample dataset to the Dataloop platform. It serves as a practical tool for users to familiarize themselves with the fundamental functionalities of various tabs in the dataset viewer.
+## Description
+
+This dataset contains images of animals with various characteristics and annotations. It is designed to help users get familiar with the data management capabilities of the Dataloop platform, including clustering, cleanup, and insights. The dataset includes the following types of images:
+
+- **Bounding Box Annotations**: Some images comes with bounding box annotations to highlight the animals within the images.
+- **Blurred/Sharp Images**: The dataset contains a mix of blurred and sharp images to simulate different image qualities.
+- **Duplicates**: There are duplicate images included to help practice deduplication techniques.
+- **Bright/Dark Images**: The images vary in brightness to provide a range of lighting conditions.
 
 ## Installation
 
