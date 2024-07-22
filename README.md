@@ -11,9 +11,10 @@ This dataset contains images of animals with various characteristics and annotat
 
 ## Installation
 
-1. Navigate to **Marketplace**.
-2. Select **Datasets**.
-3. Click on **Install**.
+1. Go to the **Marketplace**.
+2. Select the **Datasets** tab.
+3. Select the **Dataset** from the card view.
+4. Click on **Install**.
 
 <img src="assets/startline.png" alt="Startline">
 
