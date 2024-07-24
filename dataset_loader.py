@@ -80,7 +80,6 @@ class DatasetExample(dl.BaseServiceRunner):
                 for future in as_completed(futures):
                     pbar.update(1)
                     task_done += 1
-                    logger.info(f'Uploaded {task_done}/{total_tasks} features')
                     if progress is not None:
                         progress.update(progress=task_done // 2 + 50)
 
