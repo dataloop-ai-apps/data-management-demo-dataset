@@ -4,7 +4,10 @@ import requests
 import zipfile
 import json
 import dtlpy as dl
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+from functools import partial
+import tqdm
 
 logger = logging.getLogger('dataloop-example-dataset')
 
@@ -22,7 +25,6 @@ class DatasetExample(dl.BaseServiceRunner):
         self.url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-clustering-demo/export.zip'
         self.dir = os.getcwd()
         self.zip_dir = os.path.join(self.dir, 'export.zip')
-
         # Download the zip file
         response = requests.get(self.url)
         if response.status_code == 200:
@@ -37,7 +39,7 @@ class DatasetExample(dl.BaseServiceRunner):
             zip_ref.extractall(self.dir)
         logger.info('Zip file downloaded and extracted.')
 
-    def upload_dataset(self, dataset: dl.Dataset, source: str):
+    def upload_dataset(self, dataset: dl.Dataset, source: str, progress=None):
         """
         Uploads the dataset to Dataloop platform, including items, annotations and feature vectors.
 
@@ -46,6 +48,15 @@ class DatasetExample(dl.BaseServiceRunner):
         logger.info('Uploading dataset...')
         local_path = os.path.join(self.dir, 'export/items/')
         json_path = os.path.join(self.dir, 'export/json/')
+
+        def progress_callback_all(progress_class, progress, context):
+            if progress_class is not None:
+                progress_class.update(progress=progress)
+
+        progress_callback = partial(progress_callback_all, progress)
+
+        dl.client_api.add_callback(func=progress_callback, event=dl.CallbackEvent.ITEMS_UPLOAD)
+
         dataset.items.upload(local_path=local_path, local_annotations_path=json_path, item_metadata=dl.ExportMetadata.FROM_JSON)
 
         # Setup dataset recipe and ontology
@@ -61,9 +72,17 @@ class DatasetExample(dl.BaseServiceRunner):
         with open(vectors_file, 'r') as f:
             vectors = json.load(f)
 
-        with ThreadPoolExecutor(max_workers=10) as executor:
-            for key, value in vectors.items():
-                executor.submit(self.create_feature, key, value, dataset, feature_set)
+        total_tasks = len(vectors)
+        with tqdm.tqdm(total=total_tasks, desc='Uploading features') as pbar:
+            with ThreadPoolExecutor(max_workers=10) as executor:
+                futures = [executor.submit(self.create_feature, key, value, dataset, feature_set) for key, value in vectors.items()]
+                task_done = 0
+                for future in as_completed(futures):
+                    pbar.update(1)
+                    task_done += 1
+                    logger.info(f'Uploaded {task_done}/{total_tasks} features')
+                    if progress is not None:
+                        progress.update(progress=task_done // 2 + 50)
 
     def ensure_feature_set(self, dataset):
         """
