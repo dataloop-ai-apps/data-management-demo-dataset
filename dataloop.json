@@ -22,6 +22,27 @@
     }
   },
   "components": {
+    "computeConfigs": [
+      {
+        "name": "data-management-demo-dataset-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-m",
+          "concurrency": 1,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        },
+        "versions": {
+          "dtlpy": "1.92.13"
+        }
+      }
+    ],
     "modules": [
       {
         "name": "dataset-adapter",
