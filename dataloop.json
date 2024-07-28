@@ -1,7 +1,7 @@
 {
   "displayName": "Data Managment Demo Dataset",
   "name": "data-management-demo-dataset",
-  "description": "This dataset serves as a practical tool for users to familiarize themselves with the fundamental functionalities of various tabs in the dataset viewer.",
+  "description": "A general images dataset to get you familiarized with Dataloop's powerful data-management tools, including embeddings, query language, folders, versioning and more",
   "scope": "public",
   "version": "0.0.10",
   "codebase": {
