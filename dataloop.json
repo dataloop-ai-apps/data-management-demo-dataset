@@ -1,5 +1,5 @@
 {
-  "displayName": "Data Managment Demo Dataset",
+  "displayName": "Data Management Demo Dataset",
   "name": "data-management-demo-dataset",
   "description": "A general images dataset to get you familiarized with Dataloop's powerful data-management tools, including embeddings, query language, folders, versioning and more",
   "scope": "public",
@@ -75,7 +75,7 @@
     ],
     "datasets": [
       {
-        "name": "Data Managment Demo Dataset",
+        "name": "Data Management Demo Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "invoke": {
