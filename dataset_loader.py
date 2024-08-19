@@ -62,7 +62,7 @@ class DatasetExample(dl.BaseServiceRunner):
         # Setup dataset recipe and ontology
         recipe = dataset.recipes.list()[0]
         ontology = recipe.ontologies.list()[0]
-        ontology.add_labels(label_list=['zebra', 'cat', 'elephant', 'bird', 'tiger', 'snake', 'bat'])
+        ontology.add_labels(label_list=['zebra', 'cat', 'elephant', 'bird', 'tiger', 'snake', 'bat', 'mouse'])
 
         # Handle feature set
         feature_set = self.ensure_feature_set(dataset)
