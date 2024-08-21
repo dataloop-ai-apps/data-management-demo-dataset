@@ -51,7 +51,8 @@ class DatasetExample(dl.BaseServiceRunner):
 
         def progress_callback_all(progress_class, progress, context):
             if progress_class is not None:
-                progress_class.update(progress=progress)
+                new_progress = progress // 2
+                progress_class.update(progress=new_progress)
 
         progress_callback = partial(progress_callback_all, progress)
 
@@ -81,7 +82,8 @@ class DatasetExample(dl.BaseServiceRunner):
                     pbar.update(1)
                     task_done += 1
                     if progress is not None:
-                        progress.update(progress=task_done // 2 + 50)
+                        new_progress = (task_done * 50) // total_tasks + 50
+                        progress.update(progress=new_progress)
 
     def ensure_feature_set(self, dataset):
         """
