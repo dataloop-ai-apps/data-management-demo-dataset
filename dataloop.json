@@ -1,6 +1,6 @@
 {
-  "displayName": "Data Management Demo Dataset",
-  "name": "data-management-demo-dataset",
+  "displayName": "Wildlife Images Dataset",
+  "name": "dataset-images-animals",
   "description": "A general images dataset to get you familiarized with Dataloop's powerful data-management tools, including embeddings, query language, folders, versioning and more",
   "scope": "public",
   "version": "0.0.13",
@@ -24,7 +24,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "data-management-demo-dataset-deploy",
+        "name": "dataset-images-animals-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -81,7 +81,7 @@
         "invoke": {
           "namespace": "dataset-adapter.upload_dataset"
         },
-        "computeConfig": "data-management-demo-dataset-deploy"
+        "computeConfig": "dataset-images-animals-deploy"
       }
     ]
   }
