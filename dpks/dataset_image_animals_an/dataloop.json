@@ -79,7 +79,7 @@
     ],
     "datasets": [
       {
-        "name": "Data Management Demo Dataset",
+        "name": "Wildlife Images Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "invoke": {
