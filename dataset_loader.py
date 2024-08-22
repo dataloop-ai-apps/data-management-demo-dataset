@@ -19,25 +19,11 @@ class DatasetExample(dl.BaseServiceRunner):
 
     def __init__(self):
         """
-        Initialize the dataset downloader and download the zip.
+        Initialize the dataset downloader.
         """
-        logger.info('Downloading zip file...')
-        self.url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-clustering-demo/export.zip'
         self.dir = os.getcwd()
-        self.zip_dir = os.path.join(self.dir, 'export.zip')
-        # Download the zip file
-        response = requests.get(self.url)
-        if response.status_code == 200:
-            with open(self.zip_dir, 'wb') as f:
-                f.write(response.content)
-        else:
-            logger.error(f'Failed to download the file. Status code: {response.status_code}')
-            return
 
-        # Extract the zip file
-        with zipfile.ZipFile(self.zip_dir, 'r') as zip_ref:
-            zip_ref.extractall(self.dir)
-        logger.info('Zip file downloaded and extracted.')
+        logger.info('Dataset loader initialized.')
 
     def upload_dataset(self, dataset: dl.Dataset, source: str, progress=None):
         """
@@ -46,6 +32,8 @@ class DatasetExample(dl.BaseServiceRunner):
         :param dataset: The Dataloop dataset object where the data will be uploaded.
         """
         logger.info('Uploading dataset...')
+        zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-clustering-demo/export.zip'
+        self.extract_zip(zip_url)
         local_path = os.path.join(self.dir, 'export/items/')
         json_path = os.path.join(self.dir, 'export/json/')
 
@@ -85,6 +73,36 @@ class DatasetExample(dl.BaseServiceRunner):
                         new_progress = (task_done * 50) // total_tasks + 50
                         progress.update(progress=new_progress)
 
+    def upload_annotation_dataset(self, dataset: dl.Dataset, source: str, progress=None):
+        """
+        Uploads the dataset to Dataloop platform, including items and annotations.
+
+        :param dataset: The Dataloop dataset object where the data will be uploaded.
+        """
+
+        logger.info('Uploading dataset...')
+        zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-examples/animals_classification.zip'
+        self.extract_zip(zip_url)
+        local_path = os.path.join(self.dir, 'items/')
+        json_path = os.path.join(self.dir, 'json/')
+
+        def progress_callback_all(progress_class, progress, context):
+            if progress_class is not None:
+                new_progress = progress
+                progress_class.update(progress=new_progress)
+
+        progress_callback = partial(progress_callback_all, progress)
+
+        dl.client_api.add_callback(func=progress_callback, event=dl.CallbackEvent.ITEMS_UPLOAD)
+
+        dataset.items.upload(local_path=local_path, local_annotations_path=json_path, item_metadata=dl.ExportMetadata.FROM_JSON)
+
+        # Setup dataset recipe and ontology
+        recipe = dataset.recipes.list()[0]
+        ontology = recipe.ontologies.list()[0]
+        ontology.add_labels(label_list=['person', 'lion', 'shark', 'turtle'])
+        recipe.update()
+
     def ensure_feature_set(self, dataset):
         """
         Ensures that the feature set exists or creates a new one if not found.
@@ -117,3 +135,26 @@ class DatasetExample(dl.BaseServiceRunner):
         """
         item = dataset.items.get(filepath=key)
         feature_set.features.create(entity=item, value=value)
+
+    def extract_zip(self, zip_url):
+        """
+        Extracts the zip file.
+
+        :param zip_url: The url to the zip file.
+        """
+
+        logger.info('Downloading zip file...')
+        zip_dir = os.path.join(self.dir, 'export.zip')
+        # Download the zip file
+        response = requests.get(zip_url)
+        if response.status_code == 200:
+            with open(zip_dir, 'wb') as f:
+                f.write(response.content)
+        else:
+            logger.error(f'Failed to download the file. Status code: {response.status_code}')
+            return
+
+        # Extract the zip file
+        with zipfile.ZipFile(zip_dir, 'r') as zip_ref:
+            zip_ref.extractall(self.dir)
+        logger.info('Zip file downloaded and extracted.')
