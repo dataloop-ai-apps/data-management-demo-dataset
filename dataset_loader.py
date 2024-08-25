@@ -44,13 +44,16 @@ class DatasetExample(dl.BaseServiceRunner):
             if new_progress > progress_tracker['last_progress'] and new_progress % 10 == 0:
                 progress_tracker['last_progress'] = new_progress
                 if progress_class is not None:
-                    progress_class.update(progress=new_progress)
+                    progress_class.update(progress=new_progress,
+                                          message=f'Uploading items progress {new_progress}',
+                                          status=f'Uploading items progress {new_progress}')
 
         progress_callback = partial(progress_callback_all, progress)
 
         dl.client_api.add_callback(func=progress_callback, event=dl.CallbackEvent.ITEMS_UPLOAD)
 
-        dataset.items.upload(local_path=local_path, local_annotations_path=json_path, item_metadata=dl.ExportMetadata.FROM_JSON)
+        dataset.items.upload(local_path=local_path, local_annotations_path=json_path,
+                             item_metadata=dl.ExportMetadata.FROM_JSON)
 
         # Setup dataset recipe and ontology
         recipe = dataset.recipes.list()[0]
@@ -68,7 +71,8 @@ class DatasetExample(dl.BaseServiceRunner):
         total_tasks = len(vectors)
         with tqdm.tqdm(total=total_tasks, desc='Uploading features') as pbar:
             with ThreadPoolExecutor(max_workers=10) as executor:
-                futures = [executor.submit(self.create_feature, key, value, dataset, feature_set) for key, value in vectors.items()]
+                futures = [executor.submit(self.create_feature, key, value, dataset, feature_set) for key, value in
+                           vectors.items()]
                 task_done = 0
                 for future in as_completed(futures):
                     pbar.update(1)
@@ -77,7 +81,9 @@ class DatasetExample(dl.BaseServiceRunner):
                     if new_progress > progress_tracker['last_progress'] and new_progress % 10 == 0:
                         progress_tracker['last_progress'] = new_progress
                         if progress is not None:
-                            progress.update(progress=new_progress)
+                            progress.update(progress=new_progress,
+                                            message=f'Uploading items progress {new_progress}',
+                                            status=f'Uploading items progress {new_progress}')
 
     def upload_annotation_dataset(self, dataset: dl.Dataset, source: str, progress=None):
         """
@@ -99,13 +105,16 @@ class DatasetExample(dl.BaseServiceRunner):
             if new_progress > progress_tracker['last_progress'] and new_progress % 10 == 0:
                 progress_tracker['last_progress'] = new_progress
                 if progress_class is not None:
-                    progress_class.update(progress=new_progress)
+                    progress_class.update(progress=new_progress,
+                                          message=f'Uploading items progress {new_progress}',
+                                          status=f'Uploading items progress {new_progress}')
 
         progress_callback = partial(progress_callback_all, progress)
 
         dl.client_api.add_callback(func=progress_callback, event=dl.CallbackEvent.ITEMS_UPLOAD)
 
-        dataset.items.upload(local_path=local_path, local_annotations_path=json_path, item_metadata=dl.ExportMetadata.FROM_JSON)
+        dataset.items.upload(local_path=local_path, local_annotations_path=json_path,
+                             item_metadata=dl.ExportMetadata.FROM_JSON)
 
         # Setup dataset recipe and ontology
         recipe = dataset.recipes.list()[0]
