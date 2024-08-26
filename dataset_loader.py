@@ -49,8 +49,8 @@ class DatasetExample(dl.BaseServiceRunner):
                 progress_tracker['last_progress'] = new_progress
                 if progress_class is not None:
                     progress_class.update(progress=new_progress,
-                                          message=f'Uploading items ...',
-                                          status=f'Uploading items ...')
+                                          message=f'Uploading items and annotations ...',
+                                          status=f'Uploading items and annotations ...')
 
         progress_callback = partial(progress_callback_all, progress)
 
@@ -96,6 +96,10 @@ class DatasetExample(dl.BaseServiceRunner):
         :param dataset: The Dataloop dataset object where the data will be uploaded.
         """
 
+        progress.update(progress=0,
+                        message='Creating dataset...',
+                        status='Creating dataset...')
+
         logger.info('Uploading dataset...')
         zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-examples/animals_classification.zip'
         self.extract_zip(zip_url)
@@ -110,8 +114,8 @@ class DatasetExample(dl.BaseServiceRunner):
                 progress_tracker['last_progress'] = new_progress
                 if progress_class is not None:
                     progress_class.update(progress=new_progress,
-                                          message=f'Uploading annotations ...',
-                                          status=f'Uploading annotations ...')
+                                          message=f'Uploading items and annotations ...',
+                                          status=f'Uploading items and annotations ...')
 
         progress_callback = partial(progress_callback_all, progress)
 
