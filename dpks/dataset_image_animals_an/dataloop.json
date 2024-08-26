@@ -3,11 +3,11 @@
   "name": "dataset-images-animals-ann",
   "description": "A general images dataset to get you familiarized with Dataloop's powerful studios",
   "scope": "public",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.20"
+    "gitTag": "0.0.21"
   },
   "attributes": {
     "Category": "Dataset",
