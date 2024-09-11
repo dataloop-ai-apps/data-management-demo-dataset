@@ -3,11 +3,11 @@
   "name": "dataset-text-recipes",
   "description": "A Recipes Text Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
   "scope": "public",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.22"
+    "gitTag": "0.0.23"
   },
   "attributes": {
     "Category": "Dataset",
