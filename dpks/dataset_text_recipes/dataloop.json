@@ -1,0 +1,82 @@
+{
+  "displayName": "Recipes Text Dataset",
+  "name": "dataset-text-recipes",
+  "description": "A Recipes Text Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
+  "scope": "public",
+  "version": "0.0.21",
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
+    "gitTag": "0.0.21"
+  },
+  "attributes": {
+    "Category": "Dataset",
+    "Hub": "Dataloop",
+    "Provider": "Dataloop",
+    "Media Type": "Text"
+  },
+  "metadata": {
+    "system": {
+      "systemCompute": true
+    }
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "dataset-text-recipes-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-m",
+          "concurrency": 1,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        },
+        "versions": {
+          "dtlpy": "1.92.13"
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "dataset-text-module",
+        "entryPoint": "text_dataset_loader.py",
+        "className": "DatasetExample",
+        "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "upload_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              }
+            ],
+            "output": [],
+            "displayName": "upload_dataset",
+            "displayIcon": "",
+            "description": "function to upload dataset to Dataloop"
+          }
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "name": "Recipes Text Dataset",
+        "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "invoke": {
+          "namespace": "dataset-text-module.upload_dataset"
+        },
+        "computeConfig": "dataset-text-recipes-deploy"
+      }
+    ]
+  }
+}
