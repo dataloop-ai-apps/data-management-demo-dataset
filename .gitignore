@@ -300,3 +300,4 @@ librispeech/
 create_dataset_and_fs.py
 *.zip
 export
+export_to_upload
