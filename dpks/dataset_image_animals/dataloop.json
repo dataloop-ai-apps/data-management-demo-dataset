@@ -3,11 +3,11 @@
   "name": "dataset-images-animals",
   "description": "A general images dataset to get you familiarized with Dataloop's powerful data-management tools, including embeddings, query language, folders, versioning and more",
   "scope": "public",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.23"
+    "gitTag": "0.0.24"
   },
   "attributes": {
     "Category": "Dataset",
