@@ -25,7 +25,7 @@ class DatasetExample(dl.BaseServiceRunner):
 
         logger.info('Dataset loader initialized.')
 
-    def upload_dataset(self, dataset: dl.Dataset, progress=None):
+    def upload_dataset(self, dataset: dl.Dataset, source: str, progress=None):
         """
         Uploads the dataset to Dataloop platform, including items, annotations and feature vectors.
 
