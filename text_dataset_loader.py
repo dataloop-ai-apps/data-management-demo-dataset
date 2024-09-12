@@ -42,7 +42,7 @@ class DatasetExample(dl.BaseServiceRunner):
 
         progress_tracker = {'last_progress': 0}
 
-        def progress_callback_all(progress_class, progress):
+        def progress_callback_all(progress_class, progress, context):
             new_progress = progress // 2
             if new_progress > progress_tracker['last_progress'] and new_progress % 10 == 0:
                 progress_tracker['last_progress'] = new_progress
