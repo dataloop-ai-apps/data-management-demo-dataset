@@ -96,12 +96,12 @@ class DatasetExample(dl.BaseServiceRunner):
         :param dataset: The dataset where the feature set is to be managed.
         """
         try:
-            feature_set = dataset.project.feature_sets.get(feature_set_name='openai-text-embeddings-3l-feature-set')
+            feature_set = dataset.project.feature_sets.get(feature_set_name='openai-text-embeddings-3l')
             logger.info(f'Feature Set found! Name: {feature_set.name}, ID: {feature_set.id}')
         except dl.exceptions.NotFound:
             logger.info('Feature Set not found, creating...')
             feature_set = dataset.project.feature_sets.create(
-                name='openai-text-embeddings-3l-feature-set',
+                name='openai-text-embeddings-3l',
                 entity_type=dl.FeatureEntityType.ITEM,
                 project_id=dataset.project.id,
                 set_type='text-embeddings',
