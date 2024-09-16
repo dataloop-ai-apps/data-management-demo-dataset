@@ -119,7 +119,7 @@ class DatasetExample(dl.BaseServiceRunner):
         :param dataset: The dataset containing the item.
         :param feature_set: The feature set to which the feature will be added.
         """
-        item = dataset.items.get(filepath=key)
+        item = dataset.items.get(filepath='/' + key)
         feature_set.features.create(entity=item, value=value)
 
     def extract_zip(self, zip_url):
