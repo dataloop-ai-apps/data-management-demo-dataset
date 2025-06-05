@@ -41,9 +41,6 @@
             "queueLength": 1000
           },
           "preemptible": false
-        },
-        "versions": {
-          "dtlpy": "1.92.13"
         }
       }
     ],
