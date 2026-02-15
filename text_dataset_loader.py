@@ -22,6 +22,9 @@ class DatasetExample(dl.BaseServiceRunner):
         Initialize the dataset downloader.
         """
         self.dir = os.getcwd()
+        self.feature_set_name = None
+        self.feature_set_type = None
+        self.feature_set_size = None
 
         logger.info('Dataset loader initialized.')
 
@@ -31,14 +34,27 @@ class DatasetExample(dl.BaseServiceRunner):
 
         :param dataset: The Dataloop dataset object where the data will be uploaded.
         """
+        if source == 'Dataloop':
+            self.feature_set_name = 'openai-text-embeddings-3l'
+            self.feature_set_type = 'text-embeddings'
+            self.feature_set_size = 256
+            zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-rag/export.zip'
+        elif source == 'NIM':
+            self.feature_set_name = 'nim-nv-embedqa-e5-v5'
+            self.feature_set_type = 'text-embeddings'
+            self.feature_set_size = 1024
+            zip_url = 'TODO.zip'
+        else:
+            raise ValueError(f'Invalid source: {source}')
+
         progress.update(progress=0,
                         message='Creating dataset...',
                         status='Creating dataset...')
 
         logger.info('Uploading dataset...')
-        zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-rag/export.zip'
         self.extract_zip(zip_url)
-        local_path = os.path.join(self.dir, 'export/items/')
+        extracted_dir = os.path.basename(zip_url).replace('.zip', '')
+        local_path = os.path.join(self.dir, extracted_dir, 'items')
 
         progress_tracker = {'last_progress': 0}
 
@@ -68,7 +84,7 @@ class DatasetExample(dl.BaseServiceRunner):
         feature_set = self.ensure_feature_set(dataset)
 
         # Upload features
-        vectors_file = os.path.join(self.dir, 'export/vectors/vectors.json')
+        vectors_file = os.path.join(self.dir, extracted_dir, 'vectors', 'vectors.json')
         with open(vectors_file, 'r') as f:
             vectors = json.load(f)
 
@@ -101,11 +117,11 @@ class DatasetExample(dl.BaseServiceRunner):
         except dl.exceptions.NotFound:
             logger.info('Feature Set not found, creating...')
             feature_set = dataset.project.feature_sets.create(
-                name='openai-text-embeddings-3l',
+                name=self.feature_set_name,
                 entity_type=dl.FeatureEntityType.ITEM,
                 project_id=dataset.project.id,
-                set_type='text-embeddings',
-                size=256
+                set_type=self.feature_set_type,
+                size=self.feature_set_size
             )
         return feature_set
 
@@ -130,7 +146,7 @@ class DatasetExample(dl.BaseServiceRunner):
         """
 
         logger.info('Downloading zip file...')
-        zip_dir = os.path.join(self.dir, 'export.zip')
+        zip_dir = os.path.join(self.dir, os.path.basename(zip_url))
         # Download the zip file
         response = requests.get(zip_url)
         if response.status_code == 200:
