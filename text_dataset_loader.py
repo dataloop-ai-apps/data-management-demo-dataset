@@ -40,10 +40,10 @@ class DatasetExample(dl.BaseServiceRunner):
             self.feature_set_size = 256
             zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-rag/export.zip'
         elif source == 'NIM':
-            self.feature_set_name = 'nim-nv-embedqa-e5-v5'
+            self.feature_set_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
             self.feature_set_type = 'text-embeddings'
-            self.feature_set_size = 1024
-            zip_url = 'TODO.zip'
+            self.feature_set_size = 2048
+            zip_url = 'TODO/data.zip'
         else:
             raise ValueError(f'Invalid source: {source}')
 
@@ -112,7 +112,7 @@ class DatasetExample(dl.BaseServiceRunner):
         :param dataset: The dataset where the feature set is to be managed.
         """
         try:
-            feature_set = dataset.project.feature_sets.get(feature_set_name='openai-text-embeddings-3l')
+            feature_set = dataset.project.feature_sets.get(feature_set_name=self.feature_set_name)
             logger.info(f'Feature Set found! Name: {feature_set.name}, ID: {feature_set.id}')
         except dl.exceptions.NotFound:
             logger.info('Feature Set not found, creating...')
