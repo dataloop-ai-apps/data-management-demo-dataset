@@ -22,9 +22,10 @@ class DatasetExample(dl.BaseServiceRunner):
         Initialize the dataset downloader.
         """
         self.dir = os.getcwd()
+        self.embedding_model_dpk_name = None
+        self.embedding_model_component_name = None
         self.feature_set_name = None
         self.feature_set_type = None
-        self.feature_set_size = None
 
         logger.info('Dataset loader initialized.')
 
@@ -35,14 +36,16 @@ class DatasetExample(dl.BaseServiceRunner):
         :param dataset: The Dataloop dataset object where the data will be uploaded.
         """
         if source == 'Dataloop':
+            self.embedding_model_dpk_name = 'text-embeddings-3'
+            self.embedding_model_component_name = 'openai-text-embeddings-3l'
             self.feature_set_name = 'openai-text-embeddings-3l'
             self.feature_set_type = 'text-embeddings'
-            self.feature_set_size = 256
             zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-rag/export.zip'
         elif source == 'NIM':
+            self.embedding_model_dpk_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
+            self.embedding_model_component_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
             self.feature_set_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
             self.feature_set_type = 'text-embeddings'
-            self.feature_set_size = 2048
             zip_url = 'TODO/data.zip'
         else:
             raise ValueError(f'Invalid source: {source}')
@@ -105,23 +108,49 @@ class DatasetExample(dl.BaseServiceRunner):
                                             message=f'Uploading feature set ...',
                                             status=f'Uploading feature set ...')
 
+    def get_model(self, project: dl.Project):
+        dpk = dl.dpks.get(dpk_name=self.embedding_model_dpk_name)
+        try:
+            app: dl.App = project.apps.get(app_name=dpk.display_name)
+        except dl.exceptions.NotFound:
+            app: dl.App = project.apps.install(dpk=dpk)
+
+        filters = dl.Filters(resource=dl.FiltersResource.MODELS, field='app.id', values=app.id)
+        filters.add(field='app.componentName', values=self.embedding_model_component_name)
+        models = list(project.models.list(filters=filters).all())
+        if len(models) == 0:
+            model: dl.Model = app.models.create(
+                model_name=self.embedding_model_component_name,
+                dpk_model_name=self.embedding_model_name,
+                output_type=self.feature_set_type,
+            )
+        elif len(models) == 1:
+            model: dl.Model = models[0]
+        else:
+            raise ValueError(f'Multiple models found for {self.embedding_model_component_name}') 
+        return model
+
     def ensure_feature_set(self, dataset):
         """
         Ensures that the feature set exists or creates a new one if not found.
 
         :param dataset: The dataset where the feature set is to be managed.
         """
+        
+        project: dl.Project = dataset.project
+        model = self.get_model(project=project)
         try:
-            feature_set = dataset.project.feature_sets.get(feature_set_name=self.feature_set_name)
+            feature_set = project.feature_sets.get(feature_set_name=self.feature_set_name)
             logger.info(f'Feature Set found! Name: {feature_set.name}, ID: {feature_set.id}')
         except dl.exceptions.NotFound:
             logger.info('Feature Set not found, creating...')
-            feature_set = dataset.project.feature_sets.create(
+            feature_set = project.feature_sets.create(
                 name=self.feature_set_name,
                 entity_type=dl.FeatureEntityType.ITEM,
-                project_id=dataset.project.id,
+                project_id=project.id,
                 set_type=self.feature_set_type,
-                size=self.feature_set_size
+                size=model.configuration['embeddings_size'],
+                model_id=model.id
             )
         return feature_set
 

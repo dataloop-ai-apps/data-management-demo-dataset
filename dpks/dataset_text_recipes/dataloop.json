@@ -80,5 +80,20 @@
         "computeConfig": "dataset-text-recipes-deploy"
       }
     ]
-  }
+  },
+  "dependencies": [
+    {
+      "name": "text-embeddings-3",
+      "components": {
+        "models": [
+          {
+            "name": "openai-text-embeddings-3l"
+          },
+          {
+            "name": "openai-prompt-embeddings-3l"
+          }
+        ]
+      }
+    }
+  ]
 }
