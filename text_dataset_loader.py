@@ -35,17 +35,21 @@ class DatasetExample(dl.BaseServiceRunner):
 
         :param dataset: The Dataloop dataset object where the data will be uploaded.
         """
-        if source == 'Dataloop':
+        if source == 'Dataloop-Text':
             self.embedding_model_dpk_name = 'text-embeddings-3'
             self.embedding_model_component_name = 'openai-text-embeddings-3l'
             self.feature_set_name = 'openai-text-embeddings-3l'
             self.feature_set_type = 'text-embeddings'
             zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-rag/export.zip'
-        elif source == 'NIM':
+        elif source == 'NIM-Text':
             self.embedding_model_dpk_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
             self.embedding_model_component_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
             self.feature_set_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
             self.feature_set_type = 'text-embeddings'
+            zip_url = 'TODO/data.zip'
+        elif source == 'Dataloop-PDF':
+            zip_url = 'TODO/data.zip'
+        elif source == 'NIM-PDF':
             zip_url = 'TODO/data.zip'
         else:
             raise ValueError(f'Invalid source: {source}')
@@ -83,6 +87,9 @@ class DatasetExample(dl.BaseServiceRunner):
 
         dataset.items.upload(pd.DataFrame(to_upload))
 
+        if source in ['Dataloop-PDF', 'NIM-PDF']:
+            return # No feature set for PDF datasets
+        
         # Handle feature set
         feature_set = self.ensure_feature_set(dataset)
 

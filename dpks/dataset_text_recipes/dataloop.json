@@ -73,7 +73,7 @@
       {
         "name": "Recipes Text Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
-        "source": "Dataloop",
+        "source": "Dataloop-Text",
         "invoke": {
           "namespace": "dataset-text-module.upload_dataset"
         },
