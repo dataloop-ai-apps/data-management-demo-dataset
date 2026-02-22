@@ -6,7 +6,7 @@ class DatasetExample(BaseDatasetLoader):
     OpenAI Transactions Text dataset - items + feature set (text-embeddings-3).
     """
 
-    zip_url = 'TODO/data.zip'
+    zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-solutions/CompanyDocumentsChunks.zip'
     items_path = 'CompanyDocuments Chunks/items/'
 
     feature_sets = [

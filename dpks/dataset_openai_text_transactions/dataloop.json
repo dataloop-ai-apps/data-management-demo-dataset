@@ -42,7 +42,7 @@
     "modules": [
       {
         "name": "dataset-text-transactions-module",
-        "entryPoint": "dataset_text_transactions/dataset_loader.py",
+        "entryPoint": "dpks/dataset_openai_text_transactions/dataset_loader.py",
         "className": "DatasetExample",
         "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
         "initInputs": [],

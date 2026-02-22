@@ -3,11 +3,11 @@
   "name": "dataset-openai-pdf-transactions",
   "description": "An OpenAI Transactions PDF Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
   "scope": "public",
-  "version": "0.0.29",
+  "version": "0.0.32",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.29"
+    "gitTag": "0.0.32"
   },
   "attributes": {
     "Category": "Dataset",
@@ -42,7 +42,7 @@
     "modules": [
       {
         "name": "dataset-pdf-transactions-module",
-        "entryPoint": "dataset_pdf_transactions/dataset_loader.py",
+        "entryPoint": "dpks/dataset_openai_pdf_transactions/dataset_loader.py",
         "className": "DatasetExample",
         "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
         "initInputs": [],

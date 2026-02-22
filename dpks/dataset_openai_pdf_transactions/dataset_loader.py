@@ -6,5 +6,5 @@ class DatasetExample(BaseDatasetLoader):
     OpenAI Transactions PDF dataset - items.
     """
 
-    zip_url = 'TODO/data.zip'
+    zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-solutions/CompanyDocuments.zip'
     items_path = 'CompanyDocuments/items/'
