@@ -80,5 +80,13 @@
         "computeConfig": "dataset-retail-products-deploy"
       }
     ]
-  }
+  },
+  "dependencies": [
+    {
+        "name": "clip-model-pretrained"
+    },
+    {
+        "name": "resnet"
+    }
+]
 }
