@@ -1,13 +1,13 @@
 {
-  "displayName": "NIM Recipes Text Dataset",
-  "name": "nim-dataset-text-recipes",
-  "description": "A Recipes Text Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
+  "displayName": "OpenAI Transactions Text Dataset",
+  "name": "dataset-openai-text-transactions",
+  "description": "An OpenAI Transactions Text Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
   "scope": "public",
-  "version": "0.0.29",
+  "version": "0.0.32",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.29"
+    "gitTag": "0.0.32"
   },
   "attributes": {
     "Category": "Dataset",
@@ -23,7 +23,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "dataset-text-recipes-deploy",
+        "name": "dataset-text-transactions-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -41,8 +41,8 @@
     ],
     "modules": [
       {
-        "name": "dataset-text-module",
-        "entryPoint": "text_dataset_loader.py",
+        "name": "dataset-text-transactions-module",
+        "entryPoint": "dataset_text_transactions/dataset_loader.py",
         "className": "DatasetExample",
         "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
         "initInputs": [],
@@ -71,19 +71,29 @@
     ],
     "datasets": [
       {
-        "name": "NIM Recipes Text Dataset",
+        "name": "OpenAI Transactions Text Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
-        "source": "NIM-Text",
+        "source": "https://www.kaggle.com/datasets/ayoubcherguelaine/company-documents-dataset",
         "invoke": {
-          "namespace": "dataset-text-module.upload_dataset"
+          "namespace": "dataset-text-transactions-module.upload_dataset"
         },
-        "computeConfig": "dataset-text-recipes-deploy"
+        "computeConfig": "dataset-text-transactions-deploy"
       }
     ]
   },
   "dependencies": [
     {
-      "name": "nim-llama-3-2-nemoretriever-300m-embed-v2"
+      "name": "text-embeddings-3",
+      "components": {
+        "models": [
+          {
+            "name": "openai-text-embeddings-3l"
+          },
+          {
+            "name": "openai-prompt-embeddings-3l"
+          }
+        ]
+      }
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
-  "displayName": "Recipes PDF Dataset",
-  "name": "dataset-pdf-recipes",
-  "description": "A Recipes PDF Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
+  "displayName": "OpenAI Transactions PDF Dataset",
+  "name": "dataset-openai-pdf-transactions",
+  "description": "An OpenAI Transactions PDF Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
   "scope": "public",
   "version": "0.0.29",
   "codebase": {
@@ -23,7 +23,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "dataset-pdf-recipes-deploy",
+        "name": "dataset-pdf-transactions-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -41,8 +41,8 @@
     ],
     "modules": [
       {
-        "name": "dataset-pdf-module",
-        "entryPoint": "text_dataset_loader.py",
+        "name": "dataset-pdf-transactions-module",
+        "entryPoint": "dataset_pdf_transactions/dataset_loader.py",
         "className": "DatasetExample",
         "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
         "initInputs": [],
@@ -71,13 +71,13 @@
     ],
     "datasets": [
       {
-        "name": "Recipes PDF Dataset",
+        "name": "OpenAI Transactions PDF Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
-        "source": "Dataloop-PDF",
+        "source": "https://www.kaggle.com/datasets/ayoubcherguelaine/company-documents-dataset",
         "invoke": {
-          "namespace": "dataset-pdf-module.upload_dataset"
+          "namespace": "dataset-pdf-transactions-module.upload_dataset"
         },
-        "computeConfig": "dataset-pdf-recipes-deploy"
+        "computeConfig": "dataset-pdf-transactions-deploy"
       }
     ]
   }

@@ -22,10 +22,6 @@ class DatasetExample(dl.BaseServiceRunner):
         Initialize the dataset downloader.
         """
         self.dir = os.getcwd()
-        self.embedding_model_dpk_name = None
-        self.embedding_model_component_name = None
-        self.feature_set_name = None
-        self.feature_set_type = None
 
         logger.info('Dataset loader initialized.')
 
@@ -35,33 +31,14 @@ class DatasetExample(dl.BaseServiceRunner):
 
         :param dataset: The Dataloop dataset object where the data will be uploaded.
         """
-        if source == 'Dataloop-Text':
-            self.embedding_model_dpk_name = 'text-embeddings-3'
-            self.embedding_model_component_name = 'openai-text-embeddings-3l'
-            self.feature_set_name = 'openai-text-embeddings-3l'
-            self.feature_set_type = 'text-embeddings'
-            zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-rag/export.zip'
-        elif source == 'NIM-Text':
-            self.embedding_model_dpk_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
-            self.embedding_model_component_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
-            self.feature_set_name = 'nim-llama-3-2-nemoretriever-300m-embed-v2'
-            self.feature_set_type = 'text-embeddings'
-            zip_url = 'TODO/data.zip'
-        elif source == 'Dataloop-PDF':
-            zip_url = 'TODO/data.zip'
-        elif source == 'NIM-PDF':
-            zip_url = 'TODO/data.zip'
-        else:
-            raise ValueError(f'Invalid source: {source}')
-
         progress.update(progress=0,
                         message='Creating dataset...',
                         status='Creating dataset...')
 
         logger.info('Uploading dataset...')
+        zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-rag/export.zip'
         self.extract_zip(zip_url)
-        extracted_dir = os.path.basename(zip_url).replace('.zip', '')
-        local_path = os.path.join(self.dir, extracted_dir, 'items')
+        local_path = os.path.join(self.dir, 'export/items/')
 
         progress_tracker = {'last_progress': 0}
 
@@ -87,14 +64,11 @@ class DatasetExample(dl.BaseServiceRunner):
 
         dataset.items.upload(pd.DataFrame(to_upload))
 
-        if source in ['Dataloop-PDF', 'NIM-PDF']:
-            return # No feature set for PDF datasets
-        
         # Handle feature set
         feature_set = self.ensure_feature_set(dataset)
 
         # Upload features
-        vectors_file = os.path.join(self.dir, extracted_dir, 'vectors', 'vectors.json')
+        vectors_file = os.path.join(self.dir, 'export/vectors/vectors.json')
         with open(vectors_file, 'r') as f:
             vectors = json.load(f)
 
@@ -115,46 +89,23 @@ class DatasetExample(dl.BaseServiceRunner):
                                             message=f'Uploading feature set ...',
                                             status=f'Uploading feature set ...')
 
-    def get_model(self, project: dl.Project):
-        dpk = dl.dpks.get(dpk_name=self.embedding_model_dpk_name)
-        try:
-            app: dl.App = project.apps.get(app_name=dpk.display_name)
-        except dl.exceptions.NotFound:
-            app: dl.App = project.apps.install(dpk=dpk)
-
-        try:
-            model: dl.Model = project.models.get(
-                model_name=self.embedding_model_component_name
-            )
-        except dl.exceptions.NotFound:
-            model: dl.Model = app.models.create(
-                model_name=self.embedding_model_component_name,
-                dpk_model_name=self.embedding_model_name,
-                output_type=self.feature_set_type,
-            )
-        return model
-
     def ensure_feature_set(self, dataset):
         """
         Ensures that the feature set exists or creates a new one if not found.
 
         :param dataset: The dataset where the feature set is to be managed.
         """
-        
-        project: dl.Project = dataset.project
-        model = self.get_model(project=project)
         try:
-            feature_set = project.feature_sets.get(feature_set_name=self.feature_set_name)
+            feature_set = dataset.project.feature_sets.get(feature_set_name='openai-text-embeddings-3l')
             logger.info(f'Feature Set found! Name: {feature_set.name}, ID: {feature_set.id}')
         except dl.exceptions.NotFound:
             logger.info('Feature Set not found, creating...')
-            feature_set = project.feature_sets.create(
-                name=self.feature_set_name,
+            feature_set = dataset.project.feature_sets.create(
+                name='openai-text-embeddings-3l',
                 entity_type=dl.FeatureEntityType.ITEM,
-                project_id=project.id,
-                set_type=self.feature_set_type,
-                size=model.configuration['embeddings_size'],
-                model_id=model.id
+                project_id=dataset.project.id,
+                set_type='text-embeddings',
+                size=256
             )
         return feature_set
 
@@ -179,7 +130,7 @@ class DatasetExample(dl.BaseServiceRunner):
         """
 
         logger.info('Downloading zip file...')
-        zip_dir = os.path.join(self.dir, os.path.basename(zip_url))
+        zip_dir = os.path.join(self.dir, 'export.zip')
         # Download the zip file
         response = requests.get(zip_url)
         if response.status_code == 200:
