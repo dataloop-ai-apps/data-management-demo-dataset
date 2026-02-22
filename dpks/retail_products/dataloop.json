@@ -1,7 +1,7 @@
 {
-  "displayName": "Animal Images Dataset",
-  "name": "dataset-images-animals-ann",
-  "description": "A general images dataset to get you familiarized with Dataloop's powerful studios",
+  "displayName": "Retail Products Dataset",
+  "name": "dataset-retail-products",
+  "description": "A Retail Products Dataset, include images and embeddings, designed to introduce you to Dataloop's robust Clustering capabilities.",
   "scope": "public",
   "version": "0.0.32",
   "codebase": {
@@ -13,12 +13,7 @@
     "Category": "Dataset",
     "Hub": "Dataloop",
     "Provider": "Dataloop",
-    "Media Type": "Image",
-    "Annotation Type": [
-      "Bounding Box",
-      "Classification",
-      "Semantic Segmentation"
-    ]
+    "Media Type": "Image"
   },
   "metadata": {
     "system": {
@@ -28,7 +23,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "dataset-images-animals-ann-deploy",
+        "name": "dataset-retail-products-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -46,14 +41,14 @@
     ],
     "modules": [
       {
-        "name": "dataset-adapter",
-        "entryPoint": "dataset_loader.py",
+        "name": "dataset-retail-products-module",
+        "entryPoint": "dpks/retail_products/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset adapter for Dataloop Example",
+        "description": "Dataset module for Dataloop Onboarding Retail Products Dataset",
         "initInputs": [],
         "functions": [
           {
-            "name": "upload_annotation_dataset",
+            "name": "upload_dataset",
             "input": [
               {
                 "type": "Dataset",
@@ -67,7 +62,7 @@
               }
             ],
             "output": [],
-            "displayName": "upload_annotation_dataset",
+            "displayName": "upload_dataset",
             "displayIcon": "",
             "description": "function to upload dataset to Dataloop"
           }
@@ -76,14 +71,22 @@
     ],
     "datasets": [
       {
-        "name": "Wildlife Images Dataset",
+        "name": "Retail Products Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "invoke": {
-          "namespace": "dataset-adapter.upload_annotation_dataset"
+          "namespace": "dataset-retail-products-module.upload_dataset"
         },
-        "computeConfig": "dataset-images-animals-ann-deploy"
+        "computeConfig": "dataset-retail-products-deploy"
       }
     ]
-  }
+  },
+  "dependencies": [
+    {
+        "name": "clip-model-pretrained"
+    },
+    {
+        "name": "resnet"
+    }
+]
 }

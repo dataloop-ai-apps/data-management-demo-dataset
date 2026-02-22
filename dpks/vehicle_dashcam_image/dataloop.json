@@ -1,7 +1,7 @@
 {
-  "displayName": "Animal Images Dataset",
-  "name": "dataset-images-animals-ann",
-  "description": "A general images dataset to get you familiarized with Dataloop's powerful studios",
+  "displayName": "Vehicle Dashcam Image Dataset",
+  "name": "dataset-vehicle-dashcam-image",
+  "description": "A Vehicle Dashcam Image Dataset designed to introduce you to Dataloop's robust Data Management capabilities.",
   "scope": "public",
   "version": "0.0.32",
   "codebase": {
@@ -13,12 +13,7 @@
     "Category": "Dataset",
     "Hub": "Dataloop",
     "Provider": "Dataloop",
-    "Media Type": "Image",
-    "Annotation Type": [
-      "Bounding Box",
-      "Classification",
-      "Semantic Segmentation"
-    ]
+    "Media Type": "Image"
   },
   "metadata": {
     "system": {
@@ -28,7 +23,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "dataset-images-animals-ann-deploy",
+        "name": "dataset-vehicle-dashcam-image-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -46,14 +41,14 @@
     ],
     "modules": [
       {
-        "name": "dataset-adapter",
-        "entryPoint": "dataset_loader.py",
+        "name": "dataset-vehicle-dashcam-image-module",
+        "entryPoint": "dpks/vehicle_dashcam_image/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset adapter for Dataloop Example",
+        "description": "Dataset module for Dataloop Onboarding Data Management capabilities",
         "initInputs": [],
         "functions": [
           {
-            "name": "upload_annotation_dataset",
+            "name": "upload_dataset",
             "input": [
               {
                 "type": "Dataset",
@@ -67,7 +62,7 @@
               }
             ],
             "output": [],
-            "displayName": "upload_annotation_dataset",
+            "displayName": "upload_dataset",
             "displayIcon": "",
             "description": "function to upload dataset to Dataloop"
           }
@@ -76,13 +71,13 @@
     ],
     "datasets": [
       {
-        "name": "Wildlife Images Dataset",
+        "name": "Vehicle Dashcam Image Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "invoke": {
-          "namespace": "dataset-adapter.upload_annotation_dataset"
+          "namespace": "dataset-vehicle-dashcam-image-module.upload_dataset"
         },
-        "computeConfig": "dataset-images-animals-ann-deploy"
+        "computeConfig": "dataset-vehicle-dashcam-image-deploy"
       }
     ]
   }
