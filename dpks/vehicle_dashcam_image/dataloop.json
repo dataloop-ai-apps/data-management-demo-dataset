@@ -1,0 +1,84 @@
+{
+  "displayName": "Vehicle Dashcam Image Dataset",
+  "name": "dataset-vehicle-dashcam-image",
+  "description": "A Vehicle Dashcam Image Dataset designed to introduce you to Dataloop's robust Data Management capabilities.",
+  "scope": "public",
+  "version": "0.0.29",
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
+    "gitTag": "0.0.29"
+  },
+  "attributes": {
+    "Category": "Dataset",
+    "Hub": "Dataloop",
+    "Provider": "Dataloop",
+    "Media Type": "Image"
+  },
+  "metadata": {
+    "system": {
+      "systemCompute": true
+    }
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "dataset-vehicle-dashcam-image-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-m",
+          "concurrency": 1,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "dataset-vehicle-dashcam-image-module",
+        "entryPoint": "dpks/vehicle_dashcam_image/dataset_loader.py",
+        "className": "DatasetExample",
+        "description": "Dataset module for Dataloop Onboarding Data Management capabilities",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "upload_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "String",
+                "name": "source",
+                "description": "Dataset source URL"
+              }
+            ],
+            "output": [],
+            "displayName": "upload_dataset",
+            "displayIcon": "",
+            "description": "function to upload dataset to Dataloop"
+          }
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "name": "Vehicle Dashcam Image Dataset",
+        "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "invoke": {
+          "namespace": "dataset-vehicle-dashcam-image-module.upload_dataset"
+        },
+        "computeConfig": "dataset-vehicle-dashcam-image-deploy"
+      }
+    ]
+  }
+}
