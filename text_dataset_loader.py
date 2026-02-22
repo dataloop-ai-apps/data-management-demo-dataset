@@ -122,19 +122,16 @@ class DatasetExample(dl.BaseServiceRunner):
         except dl.exceptions.NotFound:
             app: dl.App = project.apps.install(dpk=dpk)
 
-        filters = dl.Filters(resource=dl.FiltersResource.MODELS, field='app.id', values=app.id)
-        filters.add(field='app.componentName', values=self.embedding_model_component_name)
-        models = list(project.models.list(filters=filters).all())
-        if len(models) == 0:
+        try:
+            model: dl.Model = project.models.get(
+                model_name=self.embedding_model_component_name
+            )
+        except dl.exceptions.NotFound:
             model: dl.Model = app.models.create(
                 model_name=self.embedding_model_component_name,
                 dpk_model_name=self.embedding_model_name,
                 output_type=self.feature_set_type,
             )
-        elif len(models) == 1:
-            model: dl.Model = models[0]
-        else:
-            raise ValueError(f'Multiple models found for {self.embedding_model_component_name}') 
         return model
 
     def ensure_feature_set(self, dataset):
