@@ -21,9 +21,13 @@ class BaseDatasetLoader(dl.BaseServiceRunner):
         annotations_path:   Relative path to annotations (None to skip)
         labels:             List of label strings to add to the ontology (None to skip)
 
-    Embeddings - pick ONE style:
+    Embeddings – pick ONE style:
         feature_sets:       List of dicts for multiple feature sets, each with keys:
                                 name, type, size, vectors_path
+                            Optional model-linking keys (per feature set):
+                                model_dpk_name, model_name, model_component_name
+                            When model keys are present, size and type are read from
+                            the model, so they can be omitted from the dict.
         OR for a single feature set use the shorthand attributes:
             vectors_path, feature_set_name, feature_set_type, feature_set_size
     """
@@ -130,7 +134,10 @@ class BaseDatasetLoader(dl.BaseServiceRunner):
 
     def _upload_embeddings(self, dataset: dl.Dataset, progress_tracker,
                            fs_cfg: dict, step_name: str):
-        feature_set = self._ensure_feature_set(dataset, fs_cfg)
+        model = None
+        if 'model_dpk_name' in fs_cfg:
+            model = self._get_or_create_model(dataset.project, fs_cfg)
+        feature_set = self._ensure_feature_set(dataset, fs_cfg, model=model)
 
         vectors_file = os.path.join(self.dir, fs_cfg['vectors_path'])
         with open(vectors_file, 'r') as f:
@@ -148,21 +155,48 @@ class BaseDatasetLoader(dl.BaseServiceRunner):
                     progress_tracker.update_step(step_name, i, total)
 
     @staticmethod
-    def _ensure_feature_set(dataset: dl.Dataset, fs_cfg: dict):
+    def _get_or_create_model(project: dl.Project, fs_cfg: dict) -> dl.Model:
+        dpk = dl.dpks.get(dpk_name=fs_cfg['model_dpk_name'])
+        try:
+            app = project.apps.get(app_name=dpk.display_name)
+        except dl.exceptions.NotFound:
+            app = project.apps.install(dpk=dpk)
+
+        model_component_name = fs_cfg['model_component_name']
+        try:
+            model = project.models.get(model_name=model_component_name)
+        except dl.exceptions.NotFound:
+            model = app.models.create(
+                model_name=model_component_name,
+                dpk_model_name=dpk.name,
+                output_type=fs_cfg.get('type', 'embedding'),
+            )
+        return model
+
+    @staticmethod
+    def _ensure_feature_set(dataset: dl.Dataset, fs_cfg: dict,
+                            model: dl.Model = None):
+        fs_name = fs_cfg['name']
         try:
             feature_set = dataset.project.feature_sets.get(
-                feature_set_name=fs_cfg['name']
+                feature_set_name=fs_name
             )
             logger.info(f'Feature Set found! Name: {feature_set.name}, ID: {feature_set.id}')
         except dl.exceptions.NotFound:
             logger.info('Feature Set not found, creating...')
-            feature_set = dataset.project.feature_sets.create(
-                name=fs_cfg['name'],
+            create_kwargs = dict(
+                name=fs_name,
                 entity_type=dl.FeatureEntityType.ITEM,
                 project_id=dataset.project.id,
-                set_type=fs_cfg['type'],
-                size=fs_cfg['size'],
+                set_type=fs_cfg.get('type', 'clip'),
+                size=fs_cfg.get('size'),
             )
+            if model is not None:
+                create_kwargs['size'] = model.configuration.get(
+                    'embeddings_size', create_kwargs['size']
+                )
+                create_kwargs['model_id'] = model.id
+            feature_set = dataset.project.feature_sets.create(**create_kwargs)
         return feature_set
 
     @staticmethod
