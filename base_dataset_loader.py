@@ -169,7 +169,7 @@ class BaseDatasetLoader(dl.BaseServiceRunner):
             model = app.models.create(
                 model_name=model_component_name,
                 dpk_model_name=dpk.name,
-                output_type=fs_cfg.get('type', 'embedding'),
+                output_type='embedding',
             )
         return model
 

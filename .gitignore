@@ -302,3 +302,4 @@ create_dataset_and_fs.py
 export
 export_to_upload
 data/
+scripts/
