@@ -1,7 +1,7 @@
 {
-  "displayName": "Wildlife Images Dataset",
-  "name": "dataset-images-animals",
-  "description": "A general images dataset to get you familiarized with Dataloop's powerful data-management tools, including embeddings, query language, folders, versioning and more",
+  "displayName": "OpenAI Transactions PDF Dataset",
+  "name": "dataset-openai-pdf-transactions",
+  "description": "An OpenAI Transactions PDF Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
   "scope": "public",
   "version": "0.0.33",
   "codebase": {
@@ -13,8 +13,7 @@
     "Category": "Dataset",
     "Hub": "Dataloop",
     "Provider": "Dataloop",
-    "Media Type": "Image",
-    "Annotation Type": "Bounding Box"
+    "Media Type": "Text"
   },
   "metadata": {
     "system": {
@@ -24,7 +23,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "dataset-images-animals-deploy",
+        "name": "dataset-pdf-transactions-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -42,10 +41,10 @@
     ],
     "modules": [
       {
-        "name": "dataset-adapter",
-        "entryPoint": "dataset_loader.py",
+        "name": "dataset-pdf-transactions-module",
+        "entryPoint": "dpks/dataset_openai_pdf_transactions/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset adapter for Dataloop Example",
+        "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
         "initInputs": [],
         "functions": [
           {
@@ -72,13 +71,13 @@
     ],
     "datasets": [
       {
-        "name": "Data Management Demo Dataset",
+        "name": "OpenAI Transactions PDF Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
-        "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "source": "https://www.kaggle.com/datasets/ayoubcherguelaine/company-documents-dataset",
         "invoke": {
-          "namespace": "dataset-adapter.upload_dataset"
+          "namespace": "dataset-pdf-transactions-module.upload_dataset"
         },
-        "computeConfig": "dataset-images-animals-deploy"
+        "computeConfig": "dataset-pdf-transactions-deploy"
       }
     ]
   }

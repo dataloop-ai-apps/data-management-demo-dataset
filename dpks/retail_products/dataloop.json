@@ -3,11 +3,11 @@
   "name": "dataset-retail-products",
   "description": "A Retail Products Dataset, include images and embeddings, designed to introduce you to Dataloop's robust Clustering capabilities.",
   "scope": "public",
-  "version": "0.0.29",
+  "version": "0.0.33",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.29"
+    "gitTag": "0.0.33"
   },
   "attributes": {
     "Category": "Dataset",
