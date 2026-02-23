@@ -1,0 +1,85 @@
+{
+  "displayName": "Medical Records Dataset",
+  "name": "medical-records-dataset",
+  "description": "A sample medical records dataset with PDF files for testing the Presidio Anonymizer",
+  "scope": "public",
+  "version": "0.0.33",
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
+    "gitTag": "0.0.33"
+  },
+
+  "attributes": {
+    "Category": "Dataset",
+    "Hub": "Dataloop",
+    "Provider": "Dataloop",
+    "Media Type": "PDF"
+  },
+  "metadata": {
+    "system": {
+      "systemCompute": true
+    }
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "medical-records-dataset-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-xs",
+          "concurrency": 1,
+          "runnerImage": "hub.dataloop.ai/dtlpy-runner-images/cpu:python3.10_opencv",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "dataset-adapter",
+        "entryPoint": "dpks/medical_dataset/dataset_loader.py",
+        "className": "DatasetLoader",
+        "description": "Dataset adapter for Medical Records",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "upload_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "String",
+                "name": "source",
+                "description": "Dataset source URL"
+              }
+            ],
+            "output": [],
+            "displayName": "upload_dataset",
+            "displayIcon": "",
+            "description": "Upload medical records dataset to Dataloop"
+          }
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "name": "Medical Records Dataset",
+        "docs": "https://github.com/dataloop-ai-apps/presidio-anonymizer",
+        "source": "https://github.com/dataloop-ai-apps/presidio-anonymizer",
+        "invoke": {
+          "namespace": "dataset-adapter.upload_dataset"
+        },
+        "computeConfig": "medical-records-dataset-deploy"
+      }
+    ]
+  }
+}
