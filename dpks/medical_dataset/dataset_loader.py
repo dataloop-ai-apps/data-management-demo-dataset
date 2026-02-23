@@ -1,42 +1,36 @@
-import logging
 import os
-
+from functools import partial
 import dtlpy as dl
-
-logger = logging.getLogger('medical-dataset-loader')
-
-ASSETS_DIR = os.path.join(os.path.dirname(__file__), 'assets')
-CHUNKS_DIR = os.path.join(os.path.dirname(__file__), 'chunks')
+from base_dataset_loader import BaseDatasetLoader
 
 
-class DatasetLoader(dl.BaseServiceRunner):
+class DatasetLoader(BaseDatasetLoader):
+    """
+    Medical records dataset – PDF assets + text chunks.
+    Zip structure:
+        medical_dataset/assets/   → uploaded to /
+        medical_dataset/chunks/   → uploaded to /chunks
+    """
 
-    def __init__(self):
-        """
-        Initialize the dataset downloader.
-        """
+    zip_url = "https://storage.googleapis.com/model-mgmt-snapshots/datasets-medical/medical_dataset.zip"
+    assets_path = 'medical_dataset/assets/'
+    chunks_path = 'medical_dataset/chunks/'
 
-        logger.info('Dataset loader initialized.')
+    # Not used directly, but keeps base happy for the items step
+    items_path = 'medical_dataset/assets/'
 
-    def upload_dataset(self, dataset: dl.Dataset, source: str, progress=None):
-        if progress is not None:
-            progress.update(progress=0,
-                            message='Uploading medical records...',
-                            status='Uploading medical records...')
+    def _upload_items(self, dataset: dl.Dataset, progress_tracker, with_annotations: bool):
+        callback = partial(self._items_progress_callback, progress_tracker)
+        dl.client_api.add_callback(func=callback, event=dl.CallbackEvent.ITEMS_UPLOAD)
 
-        logger.info(f'Uploading items from {ASSETS_DIR}')
-        dataset.items.upload(local_path=ASSETS_DIR)
+        assets_dir = os.path.join(self.dir, self.assets_path)
+        chunks_dir = os.path.join(self.dir, self.chunks_path)
 
-        if progress is not None:
-            progress.update(progress=50,
-                            message='Uploading chunks...',
-                            status='Uploading chunks...')
+        # Fall back to local dirs next to this file (original behavior)
+        if not os.path.isdir(assets_dir):
+            assets_dir = os.path.join(os.path.dirname(__file__), 'assets')
+        if not os.path.isdir(chunks_dir):
+            chunks_dir = os.path.join(os.path.dirname(__file__), 'chunks')
 
-        logger.info(f'Uploading chunks from {CHUNKS_DIR}')
-        dataset.items.upload(local_path=CHUNKS_DIR, remote_path='/chunks')
-
-        if progress is not None:
-            progress.update(progress=100,
-                            message='Upload complete.',
-                            status='Upload complete.')
-        logger.info('Dataset upload complete.')
+        dataset.items.upload(local_path=assets_dir)
+        dataset.items.upload(local_path=chunks_dir, remote_path='/chunks')
