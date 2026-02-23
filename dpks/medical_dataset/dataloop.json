@@ -3,11 +3,11 @@
   "name": "medical-records-dataset",
   "description": "A sample medical records dataset with PDF files for testing the Presidio Anonymizer",
   "scope": "public",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.33"
+    "gitTag": "0.0.34"
   },
 
   "attributes": {
