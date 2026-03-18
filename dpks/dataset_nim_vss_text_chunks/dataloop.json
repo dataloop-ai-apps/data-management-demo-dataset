@@ -1,0 +1,89 @@
+{
+  "displayName": "NIM VSS Text Chunks Dataset",
+  "name": "dataset-nim-vss-text-chunks",
+  "description": "Preprocessed text chunks dataset for the NIM Video Search & Summarization (VSS) pipeline.",
+  "scope": "public",
+  "version": "0.0.35",
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
+    "gitTag": "0.0.35"
+  },
+  "attributes": {
+    "Category": "Dataset",
+    "Hub": "Dataloop",
+    "Provider": "Dataloop",
+    "Media Type": "Text"
+  },
+  "metadata": {
+    "system": {
+      "systemCompute": true
+    }
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "dataset-nim-vss-text-chunks-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-m",
+          "concurrency": 1,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "dataset-nim-vss-text-chunks-module",
+        "entryPoint": "dpks/dataset_nim_vss_text_chunks/dataset_loader.py",
+        "className": "DatasetExample",
+        "description": "Dataset module for NIM VSS preprocessed text chunks",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "upload_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "String",
+                "name": "source",
+                "description": "Dataset source URL"
+              }
+            ],
+            "output": [],
+            "displayName": "upload_dataset",
+            "displayIcon": "",
+            "description": "function to upload dataset to Dataloop"
+          }
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "name": "NIM VSS Text Chunks Dataset",
+        "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "invoke": {
+          "namespace": "dataset-nim-vss-text-chunks-module.upload_dataset"
+        },
+        "computeConfig": "dataset-nim-vss-text-chunks-deploy"
+      }
+    ]
+  },
+  "dependencies": [
+    {
+      "name": "nim-llama-3-2-nemoretriever-1b-vlm-embed-v1"
+    }
+  ]
+}
