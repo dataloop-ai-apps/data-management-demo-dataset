@@ -1,0 +1,84 @@
+{
+  "displayName": "NIM VSS Source Videos Dataset",
+  "name": "dataset-nim-vss-source-videos",
+  "description": "Source videos dataset for the NIM Video Search & Summarization (VSS) pipeline.",
+  "scope": "public",
+  "version": "0.0.35",
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
+    "gitTag": "0.0.35"
+  },
+  "attributes": {
+    "Category": "Dataset",
+    "Hub": "Dataloop",
+    "Provider": "Dataloop",
+    "Media Type": "Video"
+  },
+  "metadata": {
+    "system": {
+      "systemCompute": true
+    }
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "dataset-nim-vss-source-videos-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-m",
+          "concurrency": 1,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "dataset-nim-vss-source-videos-module",
+        "entryPoint": "dpks/dataset_nim_vss_source_videos/dataset_loader.py",
+        "className": "DatasetExample",
+        "description": "Dataset module for NIM VSS source videos",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "upload_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "String",
+                "name": "source",
+                "description": "Dataset source URL"
+              }
+            ],
+            "output": [],
+            "displayName": "upload_dataset",
+            "displayIcon": "",
+            "description": "function to upload dataset to Dataloop"
+          }
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "name": "NIM VSS Source Videos Dataset",
+        "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "invoke": {
+          "namespace": "dataset-nim-vss-source-videos-module.upload_dataset"
+        },
+        "computeConfig": "dataset-nim-vss-source-videos-deploy"
+      }
+    ]
+  }
+}
