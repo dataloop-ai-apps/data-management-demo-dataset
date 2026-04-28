@@ -7,7 +7,7 @@ class DatasetExample(BaseDatasetLoader):
     """
 
     zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-caud-contracts/caud_contracts.zip'
-    items_path = 'caud_contracts/chunks/'
+    items_path = 'caud_contracts/items/'
 
     feature_sets = [
         dict(
