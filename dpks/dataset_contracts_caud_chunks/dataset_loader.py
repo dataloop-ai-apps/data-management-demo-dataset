@@ -11,7 +11,7 @@ class DatasetExample(BaseDatasetLoader):
 
     feature_sets = [
         dict(
-            name='clip-model-pretrained',
+            name='openai-clip',
             type='text-embeddings',
             vectors_path='caud_contracts/vectors/openai-clip.json',
             model_dpk_name='clip-model-pretrained',
