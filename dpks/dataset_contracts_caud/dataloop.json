@@ -1,0 +1,85 @@
+{
+  "displayName": "CAUD Contracts Dataset",
+  "name": "dataset-caud-contracts",
+  "description": "A CAUD Contracts Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
+  "scope": "public",
+  "version": "0.0.37",
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
+    "gitTag": "0.0.37"
+  },
+  "attributes": {
+    "Category": "Dataset",
+    "Hub": "Dataloop",
+    "Provider": "Dataloop",
+    "Media Type": "Text",
+    "License": "CC BY 4.0"
+  },
+  "metadata": {
+    "system": {
+      "systemCompute": true
+    }
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "caud-contracts-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-m",
+          "concurrency": 1,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "caud-contracts-module",
+        "entryPoint": "dpks/dataset_contracts_caud/dataset_loader.py",
+        "className": "DatasetExample",
+        "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "upload_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "String",
+                "name": "source",
+                "description": "Dataset source URL"
+              }
+            ],
+            "output": [],
+            "displayName": "upload_dataset",
+            "displayIcon": "",
+            "description": "function to upload dataset to Dataloop"
+          }
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "name": "CAUD Contracts PDF Dataset",
+        "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "source": "https://zenodo.org/records/4595826/files/CUAD_v1.zip",
+        "invoke": {
+          "namespace": "caud-contracts-module.upload_dataset"
+        },
+        "computeConfig": "caud-contracts-deploy"
+      }
+    ]
+  }
+}
