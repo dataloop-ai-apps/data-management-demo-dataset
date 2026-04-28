@@ -15,6 +15,6 @@ class DatasetExample(BaseDatasetLoader):
             type='text-embeddings',
             vectors_path='caud_contracts/vectors/openai-clip.json',
             model_dpk_name='clip-model-pretrained',
-            model_component_name='clip-model-pretrained',
+            model_component_name='openai-clip',
         )
     ]
