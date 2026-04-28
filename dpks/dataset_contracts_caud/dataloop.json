@@ -13,7 +13,8 @@
     "Category": "Dataset",
     "Hub": "Dataloop",
     "Provider": "Dataloop",
-    "Media Type": "Text"
+    "Media Type": "Text",
+    "License": "CC BY 4.0"
   },
   "metadata": {
     "system": {

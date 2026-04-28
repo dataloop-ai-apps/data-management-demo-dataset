@@ -6,7 +6,7 @@ class DatasetExample(BaseDatasetLoader):
     CAUD Contracts Chunks dataset - items + feature set (clip-model-pretrained).
     """
 
-    zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-solutions/caud_contracts.zip'
+    zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-caud-contracts/caud_contracts.zip'
     items_path = 'caud_contracts/chunks/'
 
     feature_sets = [
