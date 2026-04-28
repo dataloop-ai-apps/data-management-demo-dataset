@@ -3,7 +3,7 @@
   "name": "dataset-nim-vss-text-chunks",
   "description": "Preprocessed text chunks dataset for the NIM Video Search & Summarization (VSS) pipeline.",
   "scope": "public",
-  "version": "0.0.39",
+  "version": "0.0.40",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
