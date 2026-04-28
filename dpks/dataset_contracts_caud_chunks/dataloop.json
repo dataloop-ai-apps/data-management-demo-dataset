@@ -80,10 +80,5 @@
         "computeConfig": "caud-contracts-chunks-deploy"
       }
     ]
-  },
-  "dependencies": [
-    {
-      "name": "nim-llama-3-2-nemoretriever-300m-embed-v2"
-    }
-  ]
+  }
 }
