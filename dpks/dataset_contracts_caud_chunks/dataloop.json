@@ -80,5 +80,10 @@
         "computeConfig": "caud-contracts-chunks-deploy"
       }
     ]
-  }
+  },
+  "dependencies": [
+    {
+      "name": "clip-model-pretrained"
+    }
+  ]
 }
