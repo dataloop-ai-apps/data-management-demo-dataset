@@ -3,11 +3,11 @@
   "name": "dataset-caud-contracts-chunks",
   "description": "A CAUD Contracts Chunks Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities. Embeddings are generated using the CLIP model.",
   "scope": "public",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.42"
+    "gitTag": "0.0.43"
   },
   "attributes": {
     "Category": "Dataset",
