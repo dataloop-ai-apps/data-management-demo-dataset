@@ -1,7 +1,7 @@
 {
-  "displayName": "CAUD Contracts Custom PDF Dataset",
-  "name": "dataset-caud-contracts-custom",
-  "description": "An empty CAUD Contracts PDF Dataset used by the Custom RAG Contracts solution. Documents are ingested at runtime via a pipeline trigger.",
+  "displayName": "Source Dataset",
+  "name": "dataset-source-rag-custom",
+  "description": "Empty source dataset for the Custom CLIP & Ollama RAG solution. Documents are ingested at runtime via a pipeline trigger.",
   "scope": "public",
   "version": "0.0.43",
   "codebase": {
@@ -24,7 +24,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "caud-contracts-custom-deploy",
+        "name": "dataset-source-rag-custom-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -42,10 +42,10 @@
     ],
     "modules": [
       {
-        "name": "caud-contracts-custom-module",
-        "entryPoint": "dpks/dataset_caud_contracts_custom/dataset_loader.py",
+        "name": "dataset-source-rag-custom-module",
+        "entryPoint": "dpks/dataset_source_rag_custom/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Empty dataset module for the Custom RAG Contracts solution",
+        "description": "Empty source dataset module for the Custom CLIP & Ollama RAG solution",
         "initInputs": [],
         "functions": [
           {
@@ -72,13 +72,13 @@
     ],
     "datasets": [
       {
-        "name": "CAUD Contracts Custom PDF Dataset",
+        "name": "Source Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "source": "",
         "invoke": {
-          "namespace": "caud-contracts-custom-module.upload_dataset"
+          "namespace": "dataset-source-rag-custom-module.upload_dataset"
         },
-        "computeConfig": "caud-contracts-custom-deploy"
+        "computeConfig": "dataset-source-rag-custom-deploy"
       }
     ]
   }
