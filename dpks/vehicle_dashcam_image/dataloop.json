@@ -3,11 +3,11 @@
   "name": "dataset-vehicle-dashcam-image",
   "description": "A Vehicle Dashcam Image Dataset designed to introduce you to Dataloop's robust Data Management capabilities.",
   "scope": "public",
-  "version": "0.0.43",
+  "version": "0.0.44",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.43"
+    "gitTag": "0.0.44"
   },
   "attributes": {
     "Category": "Dataset",
