@@ -1,0 +1,84 @@
+{
+  "displayName": "Chunks Dataset",
+  "name": "dataset-empty-chunks",
+  "description": "An empty chunks dataset, suitable for solutions that produce text chunks and embeddings at runtime via a preprocessing pipeline.",
+  "scope": "public",
+  "version": "0.0.43",
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
+    "gitTag": "0.0.43"
+  },
+  "attributes": {
+    "Category": "Dataset",
+    "Hub": "Dataloop",
+    "Provider": "Dataloop",
+    "Media Type": "Text"
+  },
+  "metadata": {
+    "system": {
+      "systemCompute": true
+    }
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "dataset-empty-chunks-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-m",
+          "concurrency": 1,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "dataset-empty-chunks-module",
+        "entryPoint": "dpks/dataset_empty_chunks/dataset_loader.py",
+        "className": "DatasetExample",
+        "description": "Reusable empty chunks dataset module",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "upload_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "String",
+                "name": "source",
+                "description": "Dataset source URL"
+              }
+            ],
+            "output": [],
+            "displayName": "upload_dataset",
+            "displayIcon": "",
+            "description": "no-op (creates an empty dataset)"
+          }
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "name": "Chunks Dataset",
+        "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "invoke": {
+          "namespace": "dataset-empty-chunks-module.upload_dataset"
+        },
+        "computeConfig": "dataset-empty-chunks-deploy"
+      }
+    ]
+  }
+}
