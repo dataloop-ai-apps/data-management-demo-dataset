@@ -1,0 +1,24 @@
+import logging
+
+import dtlpy as dl
+
+from base_dataset_loader import BaseDatasetLoader
+
+logger = logging.getLogger('dataloop-dataset-loader')
+
+
+class DatasetExample(BaseDatasetLoader):
+    """
+    Custom CAUD Contracts PDF dataset.
+
+    The dataset is intentionally created empty. Documents are ingested at
+    runtime via a pipeline trigger on the source dataset, so the standard
+    zip download / extract / item upload flow is skipped here.
+    """
+
+    def upload_dataset(self, dataset: dl.Dataset, source: str, progress=None):
+        logger.info(
+            f'Creating empty dataset "{dataset.name}" (id={dataset.id}); no items uploaded.'
+        )
+        if progress is not None:
+            progress.update(progress=100, message='Done', status='Done')

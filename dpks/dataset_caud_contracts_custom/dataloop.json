@@ -1,0 +1,85 @@
+{
+  "displayName": "CAUD Contracts Custom PDF Dataset",
+  "name": "dataset-caud-contracts-custom",
+  "description": "An empty CAUD Contracts PDF Dataset used by the Custom RAG Contracts solution. Documents are ingested at runtime via a pipeline trigger.",
+  "scope": "public",
+  "version": "0.0.43",
+  "codebase": {
+    "type": "git",
+    "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
+    "gitTag": "0.0.43"
+  },
+  "attributes": {
+    "Category": "Dataset",
+    "Hub": "Dataloop",
+    "Provider": "Dataloop",
+    "Media Type": "Text",
+    "License": "CC BY 4.0"
+  },
+  "metadata": {
+    "system": {
+      "systemCompute": true
+    }
+  },
+  "components": {
+    "computeConfigs": [
+      {
+        "name": "caud-contracts-custom-deploy",
+        "secrets": [],
+        "runtime": {
+          "podType": "regular-m",
+          "concurrency": 1,
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.1",
+          "autoscaler": {
+            "type": "rabbitmq",
+            "minReplicas": 0,
+            "maxReplicas": 2,
+            "queueLength": 1000
+          },
+          "preemptible": false
+        }
+      }
+    ],
+    "modules": [
+      {
+        "name": "caud-contracts-custom-module",
+        "entryPoint": "dpks/dataset_caud_contracts_custom/dataset_loader.py",
+        "className": "DatasetExample",
+        "description": "Empty dataset module for the Custom RAG Contracts solution",
+        "initInputs": [],
+        "functions": [
+          {
+            "name": "upload_dataset",
+            "input": [
+              {
+                "type": "Dataset",
+                "name": "dataset",
+                "description": "Dataloop Dataset Entity"
+              },
+              {
+                "type": "String",
+                "name": "source",
+                "description": "Dataset source URL"
+              }
+            ],
+            "output": [],
+            "displayName": "upload_dataset",
+            "displayIcon": "",
+            "description": "no-op (creates an empty dataset)"
+          }
+        ]
+      }
+    ],
+    "datasets": [
+      {
+        "name": "CAUD Contracts Custom PDF Dataset",
+        "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
+        "source": "",
+        "invoke": {
+          "namespace": "caud-contracts-custom-module.upload_dataset"
+        },
+        "computeConfig": "caud-contracts-custom-deploy"
+      }
+    ]
+  }
+}
