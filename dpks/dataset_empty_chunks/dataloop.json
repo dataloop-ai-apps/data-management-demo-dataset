@@ -1,7 +1,7 @@
 {
-  "displayName": "Source Dataset",
-  "name": "dataset-source-rag-custom",
-  "description": "Empty source dataset for the Custom CLIP & Ollama RAG solution. Documents are ingested at runtime via a pipeline trigger.",
+  "displayName": "Chunks Dataset",
+  "name": "dataset-empty-chunks",
+  "description": "An empty chunks dataset, suitable for solutions that produce text chunks and embeddings at runtime via a preprocessing pipeline.",
   "scope": "public",
   "version": "0.0.43",
   "codebase": {
@@ -13,8 +13,7 @@
     "Category": "Dataset",
     "Hub": "Dataloop",
     "Provider": "Dataloop",
-    "Media Type": "Text",
-    "License": "CC BY 4.0"
+    "Media Type": "Text"
   },
   "metadata": {
     "system": {
@@ -24,7 +23,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "dataset-source-rag-custom-deploy",
+        "name": "dataset-empty-chunks-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -42,10 +41,10 @@
     ],
     "modules": [
       {
-        "name": "dataset-source-rag-custom-module",
-        "entryPoint": "dpks/dataset_source_rag_custom/dataset_loader.py",
+        "name": "dataset-empty-chunks-module",
+        "entryPoint": "dpks/dataset_empty_chunks/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Empty source dataset module for the Custom CLIP & Ollama RAG solution",
+        "description": "Reusable empty chunks dataset module",
         "initInputs": [],
         "functions": [
           {
@@ -72,13 +71,13 @@
     ],
     "datasets": [
       {
-        "name": "Source Dataset",
+        "name": "Chunks Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "source": "",
         "invoke": {
-          "namespace": "dataset-source-rag-custom-module.upload_dataset"
+          "namespace": "dataset-empty-chunks-module.upload_dataset"
         },
-        "computeConfig": "dataset-source-rag-custom-deploy"
+        "computeConfig": "dataset-empty-chunks-deploy"
       }
     ]
   }

@@ -1,7 +1,7 @@
 {
-  "displayName": "Chunks Dataset",
-  "name": "dataset-chunks-rag-custom",
-  "description": "Empty chunks dataset for the Custom CLIP & Ollama RAG solution. Chunks and their CLIP embeddings are produced at runtime by the preprocess pipeline.",
+  "displayName": "Source Dataset",
+  "name": "dataset-empty-source",
+  "description": "An empty source dataset, suitable for solutions that ingest items at runtime instead of preloading a corpus at install time.",
   "scope": "public",
   "version": "0.0.43",
   "codebase": {
@@ -13,7 +13,8 @@
     "Category": "Dataset",
     "Hub": "Dataloop",
     "Provider": "Dataloop",
-    "Media Type": "Text"
+    "Media Type": "Text",
+    "License": "CC BY 4.0"
   },
   "metadata": {
     "system": {
@@ -23,7 +24,7 @@
   "components": {
     "computeConfigs": [
       {
-        "name": "dataset-chunks-rag-custom-deploy",
+        "name": "dataset-empty-source-deploy",
         "secrets": [],
         "runtime": {
           "podType": "regular-m",
@@ -41,10 +42,10 @@
     ],
     "modules": [
       {
-        "name": "dataset-chunks-rag-custom-module",
-        "entryPoint": "dpks/dataset_chunks_rag_custom/dataset_loader.py",
+        "name": "dataset-empty-source-module",
+        "entryPoint": "dpks/dataset_empty_source/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Empty chunks dataset module for the Custom CLIP & Ollama RAG solution",
+        "description": "Reusable empty source dataset module",
         "initInputs": [],
         "functions": [
           {
@@ -71,19 +72,14 @@
     ],
     "datasets": [
       {
-        "name": "Chunks Dataset",
+        "name": "Source Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "source": "",
         "invoke": {
-          "namespace": "dataset-chunks-rag-custom-module.upload_dataset"
+          "namespace": "dataset-empty-source-module.upload_dataset"
         },
-        "computeConfig": "dataset-chunks-rag-custom-deploy"
+        "computeConfig": "dataset-empty-source-deploy"
       }
     ]
-  },
-  "dependencies": [
-    {
-      "name": "clip-model-pretrained"
-    }
-  ]
+  }
 }
