@@ -74,7 +74,7 @@
       {
         "name": "Source Dataset",
         "docs": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
-        "source": "",
+        "source": "https://github.com/dataloop-ai-apps/data-management-demo-dataset",
         "invoke": {
           "namespace": "dataset-empty-source-module.upload_dataset"
         },
