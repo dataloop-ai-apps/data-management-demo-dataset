@@ -3,11 +3,11 @@
   "name": "dataset-empty-chunks",
   "description": "An empty chunks dataset, suitable for solutions that produce text chunks and embeddings at runtime via a preprocessing pipeline.",
   "scope": "public",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.44"
+    "gitTag": "0.0.45"
   },
   "attributes": {
     "Category": "Dataset",

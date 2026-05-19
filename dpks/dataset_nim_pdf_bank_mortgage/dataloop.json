@@ -3,11 +3,11 @@
   "name": "dataset-nim-pdf-bank-mortgage",
   "description": "A NIM Bank Mortgage PDF Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
   "scope": "public",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.44"
+    "gitTag": "0.0.45"
   },
   "attributes": {
     "Category": "Dataset",
