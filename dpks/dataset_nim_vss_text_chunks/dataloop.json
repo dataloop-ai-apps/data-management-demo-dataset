@@ -28,7 +28,7 @@
         "runtime": {
           "podType": "regular-m",
           "concurrency": 1,
-          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.3",
+          "runnerImage": "gcr.io/viewo-g/piper/agent/cpu/datasets-torch:0.0.4",
           "autoscaler": {
             "type": "rabbitmq",
             "minReplicas": 0,
