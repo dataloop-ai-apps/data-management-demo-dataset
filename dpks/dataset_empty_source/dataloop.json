@@ -3,11 +3,11 @@
   "name": "dataset-empty-source",
   "description": "An empty source dataset, suitable for solutions that ingest items at runtime instead of preloading a corpus at install time.",
   "scope": "public",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.45"
+    "gitTag": "0.0.46"
   },
   "attributes": {
     "Category": "Dataset",

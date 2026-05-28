@@ -3,11 +3,11 @@
   "name": "dataset-caud-contracts",
   "description": "A CAUD Contracts Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
   "scope": "public",
-  "version": "0.0.45",
+  "version": "0.0.46",
   "codebase": {
     "type": "git",
     "gitUrl": "https://github.com/dataloop-ai-apps/data-management-demo-dataset.git",
-    "gitTag": "0.0.45"
+    "gitTag": "0.0.46"
   },
   "attributes": {
     "Category": "Dataset",
