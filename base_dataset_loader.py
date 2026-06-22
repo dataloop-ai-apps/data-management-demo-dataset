@@ -8,12 +8,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import partial
 import tqdm
 
-logger = logging.getLogger('dataloop-dataset-loader')
+logger = logging.getLogger('ddoe-dataset-loader')
 
 
 class BaseDatasetLoader(dl.BaseServiceRunner):
     """
-    Reusable base for Dataloop dataset DPKs.
+    Reusable base for DDOE dataset DPKs.
 
     Subclasses configure the upload by setting class-level attributes:
         zip_url:            URL to the zipped export

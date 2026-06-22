@@ -1,7 +1,7 @@
 {
   "displayName": "Retail Products Dataset",
   "name": "dataset-retail-products",
-  "description": "A Retail Products Dataset, include images and embeddings, designed to introduce you to Dataloop's robust Clustering capabilities.",
+  "description": "A Retail Products Dataset, include images and embeddings, designed to introduce you to DDOE's robust Clustering capabilities.",
   "scope": "public",
   "version": "0.0.46",
   "codebase": {
@@ -11,8 +11,8 @@
   },
   "attributes": {
     "Category": "Dataset",
-    "Hub": "Dataloop",
-    "Provider": "Dataloop",
+    "Hub": "DDOE",
+    "Provider": "DDOE",
     "Media Type": "Image"
   },
   "metadata": {
@@ -44,7 +44,7 @@
         "name": "dataset-retail-products-module",
         "entryPoint": "dpks/retail_products/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset module for Dataloop Onboarding Retail Products Dataset",
+        "description": "Dataset module for DDOE Onboarding Retail Products Dataset",
         "initInputs": [],
         "functions": [
           {
@@ -53,7 +53,7 @@
               {
                 "type": "Dataset",
                 "name": "dataset",
-                "description": "Dataloop Dataset Entity"
+                "description": "DDOE Dataset Entity"
               },
               {
                 "type": "String",
@@ -64,7 +64,7 @@
             "output": [],
             "displayName": "upload_dataset",
             "displayIcon": "",
-            "description": "function to upload dataset to Dataloop"
+            "description": "function to upload dataset to DDOE"
           }
         ]
       }

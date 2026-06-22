@@ -12,8 +12,8 @@
 
   "attributes": {
     "Category": "Dataset",
-    "Hub": "Dataloop",
-    "Provider": "Dataloop",
+    "Hub": "DDOE",
+    "Provider": "DDOE",
     "Media Type": "PDF"
   },
   "metadata": {
@@ -54,7 +54,7 @@
               {
                 "type": "Dataset",
                 "name": "dataset",
-                "description": "Dataloop Dataset Entity"
+                "description": "DDOE Dataset Entity"
               },
               {
                 "type": "String",
@@ -65,7 +65,7 @@
             "output": [],
             "displayName": "upload_dataset",
             "displayIcon": "",
-            "description": "Upload medical records dataset to Dataloop"
+            "description": "Upload medical records dataset to DDOE"
           }
         ]
       }

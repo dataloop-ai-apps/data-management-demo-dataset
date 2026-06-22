@@ -4,7 +4,7 @@ import dtlpy as dl
 
 from base_dataset_loader import BaseDatasetLoader
 
-logger = logging.getLogger('dataloop-dataset-loader')
+logger = logging.getLogger('ddoe-dataset-loader')
 
 
 class DatasetExample(BaseDatasetLoader):

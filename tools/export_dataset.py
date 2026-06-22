@@ -1,5 +1,5 @@
 """
-Export a Dataloop dataset to a local zip, ready for use with BaseDatasetLoader.
+Export a DDOE dataset to a local zip, ready for use with BaseDatasetLoader.
 
 Edit the configuration section below, then run:
     python tools/export_dataset.py

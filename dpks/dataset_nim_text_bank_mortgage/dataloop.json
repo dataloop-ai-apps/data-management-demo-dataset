@@ -1,7 +1,7 @@
 {
   "displayName": "NIM Bank Mortgage Text Dataset",
   "name": "dataset-nim-text-bank-mortgage",
-  "description": "A NIM Bank Mortgage Text Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
+  "description": "A NIM Bank Mortgage Text Dataset designed to introduce you to DDOE's robust RAG Pipeline capabilities.",
   "scope": "public",
   "version": "0.0.46",
   "codebase": {
@@ -11,8 +11,8 @@
   },
   "attributes": {
     "Category": "Dataset",
-    "Hub": "Dataloop",
-    "Provider": "Dataloop",
+    "Hub": "DDOE",
+    "Provider": "DDOE",
     "Media Type": "Text"
   },
   "metadata": {
@@ -44,7 +44,7 @@
         "name": "dataset-text-bank-mortgage-module",
         "entryPoint": "dpks/dataset_nim_text_bank_mortgage/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
+        "description": "Dataset module for DDOE Onboarding RAG Pipeline",
         "initInputs": [],
         "functions": [
           {
@@ -53,7 +53,7 @@
               {
                 "type": "Dataset",
                 "name": "dataset",
-                "description": "Dataloop Dataset Entity"
+                "description": "DDOE Dataset Entity"
               },
               {
                 "type": "String",
@@ -64,7 +64,7 @@
             "output": [],
             "displayName": "upload_dataset",
             "displayIcon": "",
-            "description": "function to upload dataset to Dataloop"
+            "description": "function to upload dataset to DDOE"
           }
         ]
       }

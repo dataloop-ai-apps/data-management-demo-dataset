@@ -1,7 +1,7 @@
 {
   "displayName": "Animal Images Dataset",
   "name": "dataset-images-animals-ann",
-  "description": "A general images dataset to get you familiarized with Dataloop's powerful studios",
+  "description": "A general images dataset to get you familiarized with DDOE's powerful studios",
   "scope": "public",
   "version": "0.0.46",
   "codebase": {
@@ -11,8 +11,8 @@
   },
   "attributes": {
     "Category": "Dataset",
-    "Hub": "Dataloop",
-    "Provider": "Dataloop",
+    "Hub": "DDOE",
+    "Provider": "DDOE",
     "Media Type": "Image",
     "Annotation Type": [
       "Bounding Box",
@@ -49,7 +49,7 @@
         "name": "dataset-adapter",
         "entryPoint": "dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset adapter for Dataloop Example",
+        "description": "Dataset adapter for DDOE Example",
         "initInputs": [],
         "functions": [
           {
@@ -58,7 +58,7 @@
               {
                 "type": "Dataset",
                 "name": "dataset",
-                "description": "Dataloop Dataset Entity"
+                "description": "DDOE Dataset Entity"
               },
               {
                 "type": "String",
@@ -69,7 +69,7 @@
             "output": [],
             "displayName": "upload_annotation_dataset",
             "displayIcon": "",
-            "description": "function to upload dataset to Dataloop"
+            "description": "function to upload dataset to DDOE"
           }
         ]
       }
