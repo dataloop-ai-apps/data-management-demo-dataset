@@ -1,7 +1,7 @@
 {
   "displayName": "Wildlife Images Dataset",
   "name": "dataset-images-animals",
-  "description": "A general images dataset to get you familiarized with Dataloop's powerful data-management tools, including embeddings, query language, folders, versioning and more",
+  "description": "A general images dataset to get you familiarized with DDOE's powerful data-management tools, including embeddings, query language, folders, versioning and more",
   "scope": "public",
   "version": "0.0.46",
   "codebase": {
@@ -11,8 +11,8 @@
   },
   "attributes": {
     "Category": "Dataset",
-    "Hub": "Dataloop",
-    "Provider": "Dataloop",
+    "Hub": "DDOE",
+    "Provider": "DDOE",
     "Media Type": "Image",
     "Annotation Type": "Bounding Box"
   },
@@ -45,7 +45,7 @@
         "name": "dataset-adapter",
         "entryPoint": "dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset adapter for Dataloop Example",
+        "description": "Dataset adapter for DDOE Example",
         "initInputs": [],
         "functions": [
           {
@@ -54,7 +54,7 @@
               {
                 "type": "Dataset",
                 "name": "dataset",
-                "description": "Dataloop Dataset Entity"
+                "description": "DDOE Dataset Entity"
               },
               {
                 "type": "String",
@@ -65,7 +65,7 @@
             "output": [],
             "displayName": "upload_dataset",
             "displayIcon": "",
-            "description": "function to upload dataset to Dataloop"
+            "description": "function to upload dataset to DDOE"
           }
         ]
       }

@@ -9,12 +9,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import partial
 import tqdm
 
-logger = logging.getLogger('dataloop-example-dataset')
+logger = logging.getLogger('ddoe-example-dataset')
 
 
 class DatasetExample(dl.BaseServiceRunner):
     """
-    A class to handle upload of example dataset to Dataloop platform.
+    A class to handle upload of example dataset to DDOE platform.
     """
 
     def __init__(self):
@@ -27,9 +27,9 @@ class DatasetExample(dl.BaseServiceRunner):
 
     def upload_dataset(self, dataset: dl.Dataset, source: str, progress=None):
         """
-        Uploads the dataset to Dataloop platform, including items, annotations and feature vectors.
+        Uploads the dataset to DDOE platform, including items, annotations and feature vectors.
 
-        :param dataset: The Dataloop dataset object where the data will be uploaded.
+        :param dataset: The DDOE dataset object where the data will be uploaded.
         """
         progress.update(progress=0,
                         message='Creating dataset...',
@@ -91,9 +91,9 @@ class DatasetExample(dl.BaseServiceRunner):
 
     def upload_annotation_dataset(self, dataset: dl.Dataset, source: str, progress=None):
         """
-        Uploads the dataset to Dataloop platform, including items and annotations.
+        Uploads the dataset to DDOE platform, including items and annotations.
 
-        :param dataset: The Dataloop dataset object where the data will be uploaded.
+        :param dataset: The DDOE dataset object where the data will be uploaded.
         """
 
         progress.update(progress=0,

@@ -2,7 +2,7 @@
 
 ## Description
 
-This dataset contains images of animals with various characteristics and annotations. It is designed to help users get familiar with the data management capabilities of the Dataloop platform, including clustering, cleanup, and insights. The dataset includes the following types of images:
+This dataset contains images of animals with various characteristics and annotations. It is designed to help users get familiar with the data management capabilities of the DDOE platform, including clustering, cleanup, and insights. The dataset includes the following types of images:
 
 - **Bounding Box Annotations**: Some images comes with bounding box annotations to highlight the animals within the images.
 - **Blurred/Sharp Images**: The dataset contains a mix of blurred and sharp images to simulate different image qualities.

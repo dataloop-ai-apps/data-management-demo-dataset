@@ -1,7 +1,7 @@
 {
   "displayName": "Vehicle Dashcam Image Dataset",
   "name": "dataset-vehicle-dashcam-image",
-  "description": "A Vehicle Dashcam Image Dataset designed to introduce you to Dataloop's robust Data Management capabilities.",
+  "description": "A Vehicle Dashcam Image Dataset designed to introduce you to DDOE's robust Data Management capabilities.",
   "scope": "public",
   "version": "0.0.46",
   "codebase": {
@@ -11,8 +11,8 @@
   },
   "attributes": {
     "Category": "Dataset",
-    "Hub": "Dataloop",
-    "Provider": "Dataloop",
+    "Hub": "DDOE",
+    "Provider": "DDOE",
     "Media Type": "Image"
   },
   "metadata": {
@@ -44,7 +44,7 @@
         "name": "dataset-vehicle-dashcam-image-module",
         "entryPoint": "dpks/vehicle_dashcam_image/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset module for Dataloop Onboarding Data Management capabilities",
+        "description": "Dataset module for DDOE Onboarding Data Management capabilities",
         "initInputs": [],
         "functions": [
           {
@@ -53,7 +53,7 @@
               {
                 "type": "Dataset",
                 "name": "dataset",
-                "description": "Dataloop Dataset Entity"
+                "description": "DDOE Dataset Entity"
               },
               {
                 "type": "String",
@@ -64,7 +64,7 @@
             "output": [],
             "displayName": "upload_dataset",
             "displayIcon": "",
-            "description": "function to upload dataset to Dataloop"
+            "description": "function to upload dataset to DDOE"
           }
         ]
       }

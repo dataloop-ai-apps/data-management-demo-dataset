@@ -1,7 +1,7 @@
 {
   "displayName": "CAUD Contracts Dataset",
   "name": "dataset-caud-contracts",
-  "description": "A CAUD Contracts Dataset designed to introduce you to Dataloop's robust RAG Pipeline capabilities.",
+  "description": "A CAUD Contracts Dataset designed to introduce you to DDOE's robust RAG Pipeline capabilities.",
   "scope": "public",
   "version": "0.0.46",
   "codebase": {
@@ -11,8 +11,8 @@
   },
   "attributes": {
     "Category": "Dataset",
-    "Hub": "Dataloop",
-    "Provider": "Dataloop",
+    "Hub": "DDOE",
+    "Provider": "DDOE",
     "Media Type": "Text",
     "License": "CC BY 4.0"
   },
@@ -45,7 +45,7 @@
         "name": "caud-contracts-module",
         "entryPoint": "dpks/dataset_contracts_caud/dataset_loader.py",
         "className": "DatasetExample",
-        "description": "Dataset module for Dataloop Onboarding RAG Pipeline",
+        "description": "Dataset module for DDOE Onboarding RAG Pipeline",
         "initInputs": [],
         "functions": [
           {
@@ -54,7 +54,7 @@
               {
                 "type": "Dataset",
                 "name": "dataset",
-                "description": "Dataloop Dataset Entity"
+                "description": "DDOE Dataset Entity"
               },
               {
                 "type": "String",
@@ -65,7 +65,7 @@
             "output": [],
             "displayName": "upload_dataset",
             "displayIcon": "",
-            "description": "function to upload dataset to Dataloop"
+            "description": "function to upload dataset to DDOE"
           }
         ]
       }
