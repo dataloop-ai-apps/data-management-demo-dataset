@@ -3,18 +3,18 @@ from base_dataset_loader import BaseDatasetLoader
 
 class DatasetExample(BaseDatasetLoader):
     """
-    NIM VSS text chunks dataset - items + annotations + feature set (nim-llama-3-2-nemoretriever-1b-vlm-embed-v1).
+    NIM VSS text chunks dataset - items + annotations + feature set (nim-nemotron-3-5-embed-1b).
     """
 
-    zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/datasets-solutions/VSSChunks.zip'
+    zip_url = 'https://storage.googleapis.com/model-mgmt-snapshots/vss-solution/VSSChunks_nemotron_3_5_embed_1b.zip'
     items_path = 'VSSChunks/items/'
 
     feature_sets = [
         dict(
-            name='nim-llama-3-2-nemoretriever-1b-vlm-embed-v1',
+            name='nim-nemotron-3-5-embed-1b',
             type='text-embeddings',
-            vectors_path='VSSChunks/vectors/nim-llama-3-2-nemoretriever-1b-vlm-embed-v1.json',
-            model_dpk_name='nim-llama-3-2-nemoretriever-1b-vlm-embed-v1',
-            model_component_name='nim-llama-3-2-nemoretriever-1b-vlm-embed-v1',
+            vectors_path='VSSChunks/vectors/nim-nemotron-3-5-embed-1b.json',
+            model_dpk_name='nim-nemotron-3-5-embed-1b',
+            model_component_name='nim-nemotron-3-5-embed-1b',
         )
     ]
