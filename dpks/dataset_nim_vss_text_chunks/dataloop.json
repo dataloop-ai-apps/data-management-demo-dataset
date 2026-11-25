@@ -83,7 +83,7 @@
   },
   "dependencies": [
     {
-      "name": "nim-llama-nemotron-embed-vl-1b-v2"
+      "name": "nim-nemotron-3-5-embed-1b"
     }
   ]
 }
